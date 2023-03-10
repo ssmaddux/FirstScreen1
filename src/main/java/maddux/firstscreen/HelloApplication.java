@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
-    Inventory inventory = new Part(1,"schmuck",200,450);
+
 
 
     public static void main(String[] args) {

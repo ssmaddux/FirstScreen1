@@ -4,15 +4,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="maddux.firstscreen.ModifyPartFormController" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="maddux.firstscreen.ModifyPartFormController">
     <children>
         <Label layoutX="63.0" layoutY="33.0" text="Modify Part" underline="true">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <RadioButton layoutX="175.0" layoutY="34.0" mnemonicParsing="false" selected="true" text="In-House" />
-        <RadioButton layoutX="283.0" layoutY="34.0" mnemonicParsing="false" text="Outsourced" />
+        <RadioButton fx:id="inHouse" layoutX="175.0" layoutY="34.0" mnemonicParsing="false" onAction="#onInHouse" selected="true" text="In-House">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgoup" />
+         </toggleGroup></RadioButton>
+        <RadioButton fx:id="outsourced" layoutX="283.0" layoutY="34.0" mnemonicParsing="false" onAction="#onOutsourced" text="Outsourced" toggleGroup="$tgoup" />
         <TextField layoutX="171.0" layoutY="89.0" promptText="Auto-Gen Disabeled" />
         <TextField layoutX="171.0" layoutY="122.0" />
         <TextField layoutX="170.0" layoutY="156.0" />
@@ -25,10 +28,9 @@
         <Label layoutX="78.0" layoutY="160.0" text="INV" />
         <Label layoutX="78.0" layoutY="192.0" text="Price/Cost" />
         <Label layoutX="78.0" layoutY="228.0" text="Max" />
-        <Label layoutX="78.0" layoutY="264.0" text="Machine ID" />
+        <Label fx:id="MachineId" layoutX="78.0" layoutY="264.0" text="Machine ID" />
         <Label layoutX="359.0" layoutY="228.0" text="Min" />
         <Button layoutX="373.0" layoutY="315.0" mnemonicParsing="false" text="Save" />
         <Button layoutX="458.0" layoutY="315.0" mnemonicParsing="false" text="Cancel" />
     </children>
 </AnchorPane>
-

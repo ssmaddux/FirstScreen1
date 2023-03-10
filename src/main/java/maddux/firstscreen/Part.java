@@ -2,7 +2,7 @@ package maddux.firstscreen;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
-
+//Part needs to be abstract class but for testing purposes leave as public class Part for now.
 public class Part extends Inventory {
     public Part(int id, String name, int inventory, int price) {
         super(id, name, inventory, price);
