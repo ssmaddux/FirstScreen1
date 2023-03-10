@@ -4,6 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 
+import java.util.Collection;
+
+import static maddux.firstscreen.Part.getAllParts;
+
 public class AddPartFormController {
     public RadioButton inHouse;
     public RadioButton outsourced;
@@ -18,4 +22,9 @@ public class AddPartFormController {
         MachineId.setText("Company Name");
 
     }
+
+
+
+
+
 }
