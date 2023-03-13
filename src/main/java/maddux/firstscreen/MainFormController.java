@@ -38,21 +38,36 @@ public class MainFormController implements Initializable {
     public Button productsDeleteButton;
     public Button paneExitButton;
 
-    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+
     public TextField searchBarPart;
     public TextField searchBarProduct;
-    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    public Button searchButtonPart;
+    public Button searchButtonProducts;
 
+
+    private static boolean firstTime = true;
+
+    private void addTestData() {
+        if (!firstTime) {
+            return;
+        }
+        firstTime = false;
+        Outsourced O = new Outsourced(1,"bab",10.5,55,2,9);
+        Inventory.addPart(O);
+        InHouse I = new InHouse(2,"yelp",56.2,89,22,100);
+        Inventory.addPart(I);
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addTestData();
 
 
 // Creating identifiers for the columns in the parts/products panes in the main form.
 
-        partsTable.setItems(allParts);
-        productsTable.setItems(allProducts);
+        partsTable.setItems(Inventory.getTheInventory());
+        productsTable.setItems(Inventory.getTheInventory());
 
         partIdCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
@@ -64,27 +79,31 @@ public class MainFormController implements Initializable {
         productInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("Inventory"));
         productPriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
-// temporary data for proving functionality of code.
-        allParts.add(new Part(1,"muffler", 200, 376));
-        allParts.add(new Part(27,"belt", 78, 50));
-        allParts.add(new Part(43,"condenser", 1000, 200));
-        allParts.add(new Part(22,"lugnut", 25, 10));
-        allParts.add(new Part(700,"headlight", 1, 250));
-        allParts.add(new Part(7,"oil pan", 56, 10));
+ //temporary data for proving functionality of code.
+//        allParts.add(new Part(1,"muffler", 200, 376));
+//        allParts.add(new Part(27,"belt", 78, 50));
+//        allParts.add(new Part(43,"condenser", 1000, 200));
+//        allParts.add(new Part(22,"lugnut", 25, 10));
+//        allParts.add(new Part(700,"headlight", 1, 250));
+//        allParts.add(new Part(7,"oil pan", 56, 10));
+//
+//        allProducts.add(new Product(7,"wizzle", 20, 36));
+//        allProducts.add(new Product(2,"whiscker", 88, 500));
+//        allProducts.add(new Product(3,"knocker", 1800, 210));
+//        allProducts.add(new Product(12,"kent", 251, 101));
+//        allProducts.add(new Product(100,"super", 11, 12345));
+//        allProducts.add(new Product(79,"shmitl", 53, 1));
 
-        allProducts.add(new Product(7,"wizzle", 20, 36));
-        allProducts.add(new Product(2,"whiscker", 88, 500));
-        allProducts.add(new Product(3,"knocker", 1800, 210));
-        allProducts.add(new Product(12,"kent", 251, 101));
-        allProducts.add(new Product(100,"super", 11, 12345));
-        allProducts.add(new Product(79,"shmitl", 53, 1));
+//        Outsourced O = new Outsourced(1,"bab",10.5,55,2,9);
+//        Inventory.addPart(O);
+//        InHouse I = new InHouse(2,"yelp",56.2,89,22,100);
 
 
 
 
     }
 
-//Null Pointer exception here. Took more than 5 hours to fix. Fixed by changing periods (.) to slashes (/) and determining the appropriate file structure.
+    //Null Pointer exception here. Took more than 5 hours to fix. Fixed by changing periods (.) to slashes (/) and determining the appropriate file structure.
 // windowing/ changing to appropriate screens using windowing by using onaction buttons in the mainform on the parts and products panes.
     public void partsOnAddB(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/AddPartForm.fxml"));
@@ -135,34 +154,20 @@ public class MainFormController implements Initializable {
     }
 
 
-    
+    public void onSearchButtonParts(ActionEvent actionEvent) {
 
+    }
 
+    public void onSearchButtonProducts(ActionEvent actionEvent) {
 
+    }
 
-// Passing in user text, putting the text into an observable list and running searchbypartname on the text, setting the table with the return value and reseting the search bar.
-// Problem here implementing the search bar. Use on action to get text from user not fx:id
-// parts pane in main form.
-   public void  onSearchButtonParts(ActionEvent actionEvent) {
-        String q = searchBarPart.getText();
-
-        ObservableList<Part> Parts = SearchByPartName(q);
-
-        partsTable.setItems(Parts);
-        searchBarPart.setText("");
-
-
-   }
-
-
-
-// creation  of search function with for loop for parts pane of the main form.
     private ObservableList<Part> SearchByPartName(String PartialName){
         ObservableList<Part> NamedParts = FXCollections.observableArrayList();
 
-        ObservableList<Part> AllParts = Part.getAllParts();
+        ObservableList<Part> AllParts = Inventory.getTheInventory();
 
-        for(Part p: allParts) {
+        for(Part p: ) {
             if(p.getName().contains(PartialName)){
                 NamedParts.add(p);
             }
@@ -171,40 +176,7 @@ public class MainFormController implements Initializable {
 
         return NamedParts;
     }
-
-    // Passing in user text, putting the text into an observable list and running searchbyproductname on the text, setting the table with the return value and reseting the search bar.
-// Problem here implementing the search bar. Use on action to get text from user not fx:id
-// products pane in main form.
-
-    public void  onSearchButtonProducts(ActionEvent actionEvent) {
-        String T = searchBarProduct.getText();
-
-        ObservableList<Product> Products = SearchByProductName(T);
-
-        productsTable.setItems(Products);
-        searchBarProduct.setText("");
-
-
     }
-
-
-
-    // creation  of search function with for loop for products pane of the main form.
-    private ObservableList<Product> SearchByProductName(String PartialName){
-        ObservableList<Product> NamedProducts = FXCollections.observableArrayList();
-
-        ObservableList<Product> AllProducts = Product.getAllProducts();
-
-        for(Product Pr: allProducts) {
-            if(Pr.getName().contains(PartialName)){
-                NamedProducts.add(Pr);
-            }
-        }
-
-
-        return NamedProducts;
-    }
-
 
 
 }
