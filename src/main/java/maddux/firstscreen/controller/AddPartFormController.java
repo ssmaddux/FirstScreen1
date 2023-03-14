@@ -1,13 +1,17 @@
-package maddux.firstscreen;
+package maddux.firstscreen.controller;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 
-public class ModifyPartFormController {
-    public Label MachineId;
-    public RadioButton outsourced;
+import java.util.Collection;
+
+
+
+public class AddPartFormController {
     public RadioButton inHouse;
+    public RadioButton outsourced;
+    public Label MachineId;
 
     public void onInHouse(ActionEvent actionEvent) {
         MachineId.setText("Machine Id");
@@ -18,4 +22,9 @@ public class ModifyPartFormController {
         MachineId.setText("Company Name");
 
     }
+
+
+
+
+
 }

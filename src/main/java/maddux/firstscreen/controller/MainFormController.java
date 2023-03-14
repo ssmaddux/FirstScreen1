@@ -1,9 +1,6 @@
-package maddux.firstscreen;
+package maddux.firstscreen.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -14,22 +11,25 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import maddux.firstscreen.model.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static maddux.firstscreen.model.Inventory.lookupPart;
+
 public class MainFormController implements Initializable {
-    public TableView productsTable;
-    public TableColumn productIdCol;
-    public TableColumn productNameCol;
-    public TableColumn productInventoryLevelCol;
-    public TableColumn productPriceCol;
-    public TableView partsTable;
-    public TableColumn partIdCol;
-    public TableColumn partNameCol;
-    public TableColumn partInventoryLevelCol;
-    public TableColumn partPriceCol;
+    public TableView<Product> productsTable;
+    public TableColumn<Product, Integer> productIdCol;
+    public TableColumn<Product, String> productNameCol;
+    public TableColumn<Product, Integer> productInventoryLevelCol;
+    public TableColumn<Product, Double> productPriceCol;
+    public TableView<Part> partsTable;
+    public TableColumn<Part,Integer> partIdCol;
+    public TableColumn<Part, String> partNameCol;
+    public TableColumn<Part, Integer> partInventoryLevelCol;
+    public TableColumn<Part, Integer> partPriceCol;
     public Button partsAddB;
     public Button partsModifyButton;
     public Button PartsDeleteButton;
@@ -52,9 +52,9 @@ public class MainFormController implements Initializable {
             return;
         }
         firstTime = false;
-        Outsourced O = new Outsourced(1,"bab",10.5,55,2,9);
+        Outsourced O = new Outsourced(1, "bab", 10.5, 55, 2, 9);
         Inventory.addPart(O);
-        InHouse I = new InHouse(2,"yelp",56.2,89,22,100);
+        InHouse I = new InHouse(2, "yelp", 56.2, 89, 22, 100);
         Inventory.addPart(I);
     }
 
@@ -66,20 +66,20 @@ public class MainFormController implements Initializable {
 
 // Creating identifiers for the columns in the parts/products panes in the main form.
 
-        partsTable.setItems(Inventory.getTheInventory());
-        productsTable.setItems(Inventory.getTheInventory());
+        partsTable.setItems(Inventory.getAllParts());
+        productsTable.setItems(Inventory.getAllProducts());
 
-        partIdCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        partNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        partInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("Inventory"));
-        partPriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        productIdCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        productNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        productInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("Inventory"));
-        productPriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        productIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
- //temporary data for proving functionality of code.
+        //temporary data for proving functionality of code.
 //        allParts.add(new Part(1,"muffler", 200, 376));
 //        allParts.add(new Part(27,"belt", 78, 50));
 //        allParts.add(new Part(43,"condenser", 1000, 200));
@@ -99,8 +99,6 @@ public class MainFormController implements Initializable {
 //        InHouse I = new InHouse(2,"yelp",56.2,89,22,100);
 
 
-
-
     }
 
     //Null Pointer exception here. Took more than 5 hours to fix. Fixed by changing periods (.) to slashes (/) and determining the appropriate file structure.
@@ -111,7 +109,6 @@ public class MainFormController implements Initializable {
         Scene scene = new Scene(root, 600, 400);
         stage.setScene(scene);
     }
-
 
 
     public void partsOnModifyButton(ActionEvent actionEvent) throws IOException {
@@ -155,6 +152,15 @@ public class MainFormController implements Initializable {
 
 
     public void onSearchButtonParts(ActionEvent actionEvent) {
+        try{
+            int partId = Integer.parseInt(searchBarPart.getText());
+            Part part = lookupPart(partId);
+            partsTable.getSelectionModel().select(part);
+
+        } catch (Exception e){
+            String partName = searchBarPart.getText();
+
+        }
 
     }
 
@@ -162,21 +168,6 @@ public class MainFormController implements Initializable {
 
     }
 
-    private ObservableList<Part> SearchByPartName(String PartialName){
-        ObservableList<Part> NamedParts = FXCollections.observableArrayList();
-
-        ObservableList<Part> AllParts = Inventory.getTheInventory();
-
-        for(Part p: ) {
-            if(p.getName().contains(PartialName)){
-                NamedParts.add(p);
-            }
-        }
-
-
-        return NamedParts;
-    }
-    }
 
 
 }

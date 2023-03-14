@@ -1,4 +1,4 @@
-package maddux.firstscreen;
+package maddux.firstscreen.model;
 
 public class InHouse extends Part {
 
@@ -11,4 +11,9 @@ public class InHouse extends Part {
     public int getMachineId() {
         return machineId;
     }
+    public void setMachineId(int machineId) {
+        this.machineId = machineId;
+    }
+
+
 }

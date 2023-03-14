@@ -1,4 +1,4 @@
-package maddux.firstscreen;
+package maddux.firstscreen.model;
 
 public class Outsourced extends Part {
     private String CompanyName;
@@ -9,5 +9,8 @@ public class Outsourced extends Part {
 
     public String getCompanyName() {
         return CompanyName;
+    }
+    public void setCompanyName(String companyName) {
+        this.CompanyName = CompanyName;
     }
 }
