@@ -1,23 +1,24 @@
 package maddux.firstscreen.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import maddux.firstscreen.model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static maddux.firstscreen.model.Inventory.lookupPart;
+import static maddux.firstscreen.model.Inventory.lookupProduct;
 
 public class MainFormController implements Initializable {
     public TableView<Product> productsTable;
@@ -56,6 +57,11 @@ public class MainFormController implements Initializable {
         Inventory.addPart(O);
         InHouse I = new InHouse(2, "yelp", 56.2, 89, 22, 100);
         Inventory.addPart(I);
+//        Outsourced L = new Outsourced(8, "jallo", 13.5, 95, 55, 5000);
+//        Inventory.addProduct(L);
+//        InHouse K = new InHouse(2, "sheepl", 53.2, 9, 2, 1230);
+//        Inventory.addProduct(K);
+
     }
 
 
@@ -79,7 +85,7 @@ public class MainFormController implements Initializable {
         productInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        //temporary data for proving functionality of code.
+//        temporary data for proving functionality of code.
 //        allParts.add(new Part(1,"muffler", 200, 376));
 //        allParts.add(new Part(27,"belt", 78, 50));
 //        allParts.add(new Part(43,"condenser", 1000, 200));
@@ -94,15 +100,18 @@ public class MainFormController implements Initializable {
 //        allProducts.add(new Product(100,"super", 11, 12345));
 //        allProducts.add(new Product(79,"shmitl", 53, 1));
 
-//        Outsourced O = new Outsourced(1,"bab",10.5,55,2,9);
-//        Inventory.addPart(O);
-//        InHouse I = new InHouse(2,"yelp",56.2,89,22,100);
+
 
 
     }
 
+
+
+
+
     //Null Pointer exception here. Took more than 5 hours to fix. Fixed by changing periods (.) to slashes (/) and determining the appropriate file structure.
 // windowing/ changing to appropriate screens using windowing by using onaction buttons in the mainform on the parts and products panes.
+    @FXML
     public void partsOnAddB(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/AddPartForm.fxml"));
         Stage stage = (Stage) partsAddB.getScene().getWindow();
@@ -110,17 +119,32 @@ public class MainFormController implements Initializable {
         stage.setScene(scene);
     }
 
-
-    public void partsOnModifyButton(ActionEvent actionEvent) throws IOException {
+    @FXML
+    void partsOnModifyButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/ModifyPartForm.fxml"));
         Stage stage = (Stage) partsAddB.getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);
         stage.setScene(scene);
+
+        }
     }
+
 
     public void partsOnDeleteButton(ActionEvent actionEvent) {
         System.out.println("On delete clicked");
+        Part selectedPart = partsTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you sure?");
+        alert.setContentText("Do you want to delete this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Inventory.deletePart(selectedPart);
+        }
     }
+
+
 
     public void productsOnAddButton(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/AddProductForm.fxml"));
@@ -137,11 +161,32 @@ public class MainFormController implements Initializable {
     }
 
     public void productsOnDeleteButton(ActionEvent actionEvent) {
-        System.out.println("On delete clicked");
+        Product selectedProduct = productsTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you sure?");
+        alert.setContentText("Do you want to delete this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Product selectedDeleteProduct = productsTable.getSelectionModel().getSelectedItem();
+            if (selectedDeleteProduct.getAllAssociatedParts().size() > 0) {
+                Alert cantDelete = new Alert(Alert.AlertType.ERROR);
+                cantDelete.setTitle("Error Message");
+                cantDelete.setContentText("Remove associated parts before you delete the product.");
+                cantDelete.showAndWait();
+                return;
+            }
+            Inventory.deleteProduct(selectedProduct);
+        }
+
     }
 
-    public void onExitButtonClick() {
-        System.out.println("Exit button clicked");
+
+
+    public void onExitButtonClick(ActionEvent ExitButton) {
+        Stage stage = (Stage) ((Node) ExitButton.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     public void onSearchBarPart(ActionEvent actionEvent) {
@@ -165,8 +210,19 @@ public class MainFormController implements Initializable {
     }
 
     public void onSearchButtonProducts(ActionEvent actionEvent) {
+        try{
+            int productId = Integer.parseInt(searchBarProduct.getText());
+            Product product = lookupProduct(productId);
+            productsTable.getSelectionModel().select(product);
+
+        } catch (Exception e){
+            String productName = searchBarProduct.getText();
+
+        }
 
     }
+
+
 
 
 

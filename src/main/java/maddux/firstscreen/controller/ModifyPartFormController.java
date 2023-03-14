@@ -1,8 +1,10 @@
 package maddux.firstscreen.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+
 
 public class ModifyPartFormController {
     public Label MachineId;
@@ -12,10 +14,13 @@ public class ModifyPartFormController {
     public void onInHouse(ActionEvent actionEvent) {
         MachineId.setText("Machine Id");
 
+
     }
 
     public void onOutsourced(ActionEvent actionEvent) {
         MachineId.setText("Company Name");
 
     }
+
+
 }

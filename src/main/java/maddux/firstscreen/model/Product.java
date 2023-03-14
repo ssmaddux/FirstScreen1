@@ -3,7 +3,9 @@ package maddux.firstscreen.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Product {
+public class  Product  {
+
+    //Confusion here.
 private  ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 private int id;
 
@@ -109,17 +111,23 @@ private int max;
         this.max = max;
     }
 
-//    public void addAssociatedPart(Part: part); {
-//
-//    }
-//    public boolean deleteAssociatedPart(selectAssociatedPart: Part){
-//
-//    };
-//
-//    public getAllAssociatedParts(){
-//
-//    };
-//
+    //confusion adding these.
+
+    public void addAssociatedPart(Part part) {
+        associatedParts.add(part);
+    }
+
+
+    public boolean deleteAssociatedPart(Part selectedAssociatedParts) {
+        return associatedParts.remove(selectedAssociatedParts);
+
+    }
+
+    public ObservableList<Part> getAllAssociatedParts() {
+        return associatedParts;
+
+    }
+
 
 
 
