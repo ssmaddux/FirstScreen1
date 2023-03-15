@@ -25,9 +25,16 @@ public class Inventory  {
     }
     //This will be for searching via Text rather than Id and its needed below as well.
     public static ObservableList<Part> lookupPart(String part){
+        //String partName = part;
+        ObservableList<Part> kk =FXCollections.observableArrayList();
+        for(Part p : allParts) {
+            if (part.compareTo(p.getName()) == 0)
+                kk.add(p);
+
+        }
 
 
-        return null;
+        return kk;
 
     }
 

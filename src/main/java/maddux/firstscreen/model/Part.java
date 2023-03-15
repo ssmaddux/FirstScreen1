@@ -1,6 +1,8 @@
 package maddux.firstscreen.model;
 
 
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author Place Your Name Here
@@ -20,6 +22,10 @@ public abstract class Part {
         this.stock = stock;
         this.min = min;
         this.max = max;
+    }
+
+    public static ObservableList<Part> getAllParts() {
+        return getAllParts();
     }
 
     /**

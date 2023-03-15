@@ -1,5 +1,7 @@
 package maddux.firstscreen.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +48,8 @@ public class MainFormController implements Initializable {
     public Button searchButtonProducts;
 
 
+
+
     private static boolean firstTime = true;
 
     private void addTestData() {
@@ -57,10 +61,10 @@ public class MainFormController implements Initializable {
         Inventory.addPart(O);
         InHouse I = new InHouse(2, "yelp", 56.2, 89, 22, 100);
         Inventory.addPart(I);
-//        Outsourced L = new Outsourced(8, "jallo", 13.5, 95, 55, 5000);
-//        Inventory.addProduct(L);
-//        InHouse K = new InHouse(2, "sheepl", 53.2, 9, 2, 1230);
-//        Inventory.addProduct(K);
+        Product L = new Product(8, "jallo", 13.5, 95, 55, 5000);
+        Inventory.addProduct(L);
+        Product K = new Product(2, "sheepl", 53.2, 9, 2, 1230);
+        Inventory.addProduct(K);
 
     }
 
@@ -68,6 +72,7 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addTestData();
+
 
 
 // Creating identifiers for the columns in the parts/products panes in the main form.
@@ -85,7 +90,7 @@ public class MainFormController implements Initializable {
         productInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-//        temporary data for proving functionality of code.
+       // temporary data for proving functionality of code.
 //        allParts.add(new Part(1,"muffler", 200, 376));
 //        allParts.add(new Part(27,"belt", 78, 50));
 //        allParts.add(new Part(43,"condenser", 1000, 200));
@@ -103,7 +108,53 @@ public class MainFormController implements Initializable {
 
 
 
+
+
     }
+
+//    partsTable.setItems(parts);
+
+    public void onSearchButtonParts(ActionEvent event) {
+        if (!searchBarPart.getText().trim().isEmpty()) {
+            try {
+                int partSearch = Integer.parseInt(searchBarPart.getText());
+                for (Part p : Inventory.getAllParts()) {
+                    if (p.getId() == partSearch) {
+                        partsTable.getSelectionModel().select(p);
+                    }
+                }
+            } catch (NumberFormatException e) {
+                String partSearch = (searchBarPart.getText());
+                for (Part p : Inventory.getAllParts()) {
+                    if (p.getName().equals(partSearch)) {
+                        partsTable.getSelectionModel().select(p);
+                    }
+                }
+            }
+        }
+    }
+
+    public void onSearchButtonProducts(ActionEvent event) {
+        if (!searchBarProduct.getText().trim().isEmpty()) {
+            try {
+                int productSearch = Integer.parseInt(searchBarProduct.getText());
+                for (Product p : Inventory.getAllProducts()) {
+                    if (p.getId() == productSearch) {
+                        productsTable.getSelectionModel().select(p);
+                    }
+                }
+            } catch (NumberFormatException e) {
+                String productSearch = (searchBarProduct.getText());
+                for (Product p : Inventory.getAllProducts()) {
+                    if (p.getName().equals(productSearch)) {
+                        productsTable.getSelectionModel().select(p);
+                    }
+                }
+            }
+        }
+    }
+
+
 
 
 
@@ -127,7 +178,7 @@ public class MainFormController implements Initializable {
         stage.setScene(scene);
 
         }
-    }
+
 
 
     public void partsOnDeleteButton(ActionEvent actionEvent) {
@@ -196,31 +247,9 @@ public class MainFormController implements Initializable {
     }
 
 
-    public void onSearchButtonParts(ActionEvent actionEvent) {
-        try{
-            int partId = Integer.parseInt(searchBarPart.getText());
-            Part part = lookupPart(partId);
-            partsTable.getSelectionModel().select(part);
 
-        } catch (Exception e){
-            String partName = searchBarPart.getText();
 
-        }
 
-    }
-
-    public void onSearchButtonProducts(ActionEvent actionEvent) {
-        try{
-            int productId = Integer.parseInt(searchBarProduct.getText());
-            Product product = lookupProduct(productId);
-            productsTable.getSelectionModel().select(product);
-
-        } catch (Exception e){
-            String productName = searchBarProduct.getText();
-
-        }
-
-    }
 
 
 
