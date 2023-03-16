@@ -1,7 +1,5 @@
 package maddux.firstscreen.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +17,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static maddux.firstscreen.model.Inventory.lookupPart;
-import static maddux.firstscreen.model.Inventory.lookupProduct;
+//import static maddux.firstscreen.model.Inventory.lookupPart;
+//import static maddux.firstscreen.model.Inventory.lookupProduct;
 
 public class MainFormController implements Initializable {
     public TableView<Product> productsTable;
@@ -57,9 +55,11 @@ public class MainFormController implements Initializable {
             return;
         }
         firstTime = false;
-        Outsourced O = new Outsourced(1, "bab", 10.5, 55, 2, 9);
+        String companyName = null;
+        Outsourced O = new Outsourced(1, "bab", 10.5, 55, 2, 9, companyName);
         Inventory.addPart(O);
-        InHouse I = new InHouse(2, "yelp", 56.2, 89, 22, 100);
+        int machineID = 0;
+        InHouse I = new InHouse(2, "yelp", 56.2, 89, 22, 100, machineID);
         Inventory.addPart(I);
         Product L = new Product(8, "jallo", 13.5, 95, 55, 5000);
         Inventory.addProduct(L);

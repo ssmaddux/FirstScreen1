@@ -14,29 +14,29 @@ public class Inventory  {
     public static ObservableList<Part> getAllParts(){
         return allParts;
     }
-    public static Part lookupPart(int partId){
-        for(Part p : allParts ) {
-            if (p.getId() == partId)
-                return p;
-        }
-
-        return null;
-
-    }
-    //This will be for searching via Text rather than Id and its needed below as well.
-    public static ObservableList<Part> lookupPart(String part){
-        //String partName = part;
-        ObservableList<Part> kk =FXCollections.observableArrayList();
-        for(Part p : allParts) {
-            if (part.compareTo(p.getName()) == 0)
-                kk.add(p);
-
-        }
-
-
-        return kk;
-
-    }
+//    public static Part lookupPart(int partId){
+//        for(Part p : allParts ) {
+//            if (p.getId() == partId)
+//                return p;
+//        }
+//
+//        return null;
+//
+//    }
+//    This will be for searching via Text rather than Id and its needed below as well.
+//    public static ObservableList<Part> lookupPart(String part){
+//        //String partName = part;
+//        ObservableList<Part> kk =FXCollections.observableArrayList();
+//        for(Part p : allParts) {
+//            if (part.compareTo(p.getName()) == 0)
+//                kk.add(p);
+//
+//        }
+//
+//
+//        return kk;
+//
+//    }
 
     public static void addProduct(Product product) {
         allProducts.add(product);
@@ -44,15 +44,15 @@ public class Inventory  {
     public static ObservableList<Product> getAllProducts(){
         return allProducts;
     }
-    public static Product lookupProduct(int productId){
-        for(Product p : allProducts ) {
-            if (p.getId() == productId)
-                return p;
-        }
-
-        return null;
-
-    }
+//    public static Product lookupProduct(int productId){
+//        for(Product p : allProducts ) {
+//            if (p.getId() == productId)
+//                return p;
+//        }
+//
+//        return null;
+//
+//    }
 
 
     public static boolean deletePart (Part selectedPart) {
