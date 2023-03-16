@@ -72,4 +72,5 @@ public class Inventory  {
             return false;
         }
     }
+    public static Part  selectedPart = null;
 }

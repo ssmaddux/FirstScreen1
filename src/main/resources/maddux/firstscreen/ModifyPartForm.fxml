@@ -12,17 +12,17 @@
             </font>
         </Label>
         <RadioButton fx:id="inHouse" layoutX="175.0" layoutY="34.0" mnemonicParsing="false" onAction="#onInHouse" selected="true" text="In-House">
-         <toggleGroup>
-            <ToggleGroup fx:id="tgoup" />
-         </toggleGroup></RadioButton>
-        <RadioButton fx:id="outsourced" layoutX="283.0" layoutY="34.0" mnemonicParsing="false" onAction="#onOutsourced" text="Outsourced" toggleGroup="$tgoup" />
-        <TextField layoutX="171.0" layoutY="89.0" promptText="Auto-Gen Disabeled" />
-        <TextField layoutX="171.0" layoutY="122.0" />
-        <TextField layoutX="170.0" layoutY="156.0" />
-        <TextField layoutX="170.0" layoutY="188.0" />
-        <TextField layoutX="171.0" layoutY="224.0" />
-        <TextField layoutX="170.0" layoutY="260.0" />
-        <TextField layoutX="409.0" layoutY="224.0" />
+            <toggleGroup>
+                <ToggleGroup fx:id="tgourp" />
+            </toggleGroup></RadioButton>
+        <RadioButton fx:id="outsourced" layoutX="283.0" layoutY="34.0" mnemonicParsing="false" onAction="#onOutsourced" text="Outsourced" toggleGroup="$tgourp" />
+        <TextField fx:id="idField" layoutX="171.0" layoutY="89.0" promptText="Auto-Gen Disabeled" />
+        <TextField fx:id="nameField" layoutX="171.0" layoutY="122.0" />
+        <TextField fx:id="inventoryField" layoutX="170.0" layoutY="156.0" />
+        <TextField fx:id="priceField" layoutX="170.0" layoutY="188.0" />
+        <TextField fx:id="maxField" layoutX="171.0" layoutY="224.0" />
+        <TextField fx:id="machineIdField" layoutX="170.0" layoutY="260.0" />
+        <TextField fx:id="minField" layoutX="409.0" layoutY="224.0" />
         <Label layoutX="78.0" layoutY="93.0" text="ID" />
         <Label layoutX="78.0" layoutY="126.0" text="Name" />
         <Label layoutX="78.0" layoutY="160.0" text="INV" />
@@ -30,7 +30,7 @@
         <Label layoutX="78.0" layoutY="228.0" text="Max" />
         <Label fx:id="MachineId" layoutX="78.0" layoutY="264.0" text="Machine ID" />
         <Label layoutX="359.0" layoutY="228.0" text="Min" />
-        <Button layoutX="373.0" layoutY="315.0" mnemonicParsing="false" text="Save" />
-        <Button layoutX="458.0" layoutY="315.0" mnemonicParsing="false" text="Cancel" />
+        <Button fx:id="saveButton" layoutX="373.0" layoutY="315.0" mnemonicParsing="false" onAction="#onSaveButton" text="Save" />
+        <Button fx:id="cancelButton" layoutX="458.0" layoutY="315.0" mnemonicParsing="false" onAction="#onCancelButton" text="Cancel" />
     </children>
 </AnchorPane>
