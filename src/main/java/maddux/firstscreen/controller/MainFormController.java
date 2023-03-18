@@ -56,9 +56,9 @@ public class MainFormController implements Initializable {
         }
         firstTime = false;
 
-        Part O = new Outsourced(1, "bab", 10.5, 55, 2, 9, "excalibur");
+        Part O = new Outsourced(1, "intake", 10.5, 55, 2, 9, "excalibur");
         Inventory.addPart(O);
-        Part I = new InHouse(2, "yelp", 56.2, 89, 22, 100, 58);
+        Part I = new InHouse(2, "muffler", 56.2, 89, 22, 100, 58);
         Inventory.addPart(I);
 
         //these are product objects.
@@ -175,6 +175,14 @@ public class MainFormController implements Initializable {
     void partsOnModifyButton(ActionEvent event) throws IOException {
         Part selectedPart = (Part) partsTable.getSelectionModel().getSelectedItem();
         //check is selected part is null. "please Select a part to modify".
+        if (selectedPart == null)
+        {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Select a product to modify");
+            alert.show();
+        }
         ModifyPartFormController.dataPassing(selectedPart);
 
 //        FXMLLoader loader = new FXMLLoader();
