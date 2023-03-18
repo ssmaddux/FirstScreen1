@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 
+import static java.lang.Character.isAlphabetic;
+
 public class Inventory  {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
@@ -72,5 +74,42 @@ public class Inventory  {
             return false;
         }
     }
+
+    /** returns an integer index of the product.
+     *
+     * @param part
+     * @return the index of a part as int.
+     */
+    public static int getIndex (Part part) {
+        return allParts.indexOf(part);
+    }
+
+    /** replaces a part in allPArts with .set() at a specific index.
+     *
+     * @param index of the part to be replaced.
+     * @param updatedPart the part to be saved over the old part.
+     */
+    public static void updatePart(int index, Part updatedPart) {
+        allParts.set(index, updatedPart);
+    }
+
+    /** checks to see if the first character in a string is alphabetic. Returns false if left empyt or is numerical.
+     *
+     * @param check check = the string to be verified.
+     * @return only tru if alphabetic.
+     */
+    public static boolean startWLetter(String check) {
+        if (check == "" || check == null) {
+            return false;
+        }
+        if (isAlphabetic(check.charAt(0))) {
+
+        }
+        else {
+            return false;
+        }
+        return false;
+    }
+
     public static Part  selectedPart = null;
 }

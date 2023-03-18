@@ -1,16 +1,16 @@
 package maddux.firstscreen.model;
 
 public class Outsourced extends Part {
-    private String CompanyName;
+    private String companyName;
     public Outsourced(int id, String name, double price, int stock, int min, int max, String companyName) {
         super(id, name, price, stock, min, max);
-        this.CompanyName = CompanyName;
+        this.companyName = companyName;
     }
 
     public String getCompanyName() {
-        return CompanyName;
+        return companyName;
     }
     public void setCompanyName(String companyName) {
-        this.CompanyName = CompanyName;
+        this.companyName = companyName;
     }
 }

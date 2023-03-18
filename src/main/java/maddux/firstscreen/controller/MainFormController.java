@@ -55,15 +55,16 @@ public class MainFormController implements Initializable {
             return;
         }
         firstTime = false;
-        String companyName = null;
-        Outsourced O = new Outsourced(1, "bab", 10.5, 55, 2, 9, companyName);
+
+        Part O = new Outsourced(1, "bab", 10.5, 55, 2, 9, "excalibur");
         Inventory.addPart(O);
-        int machineID = 0;
-        InHouse I = new InHouse(2, "yelp", 56.2, 89, 22, 100, machineID);
+        Part I = new InHouse(2, "yelp", 56.2, 89, 22, 100, 58);
         Inventory.addPart(I);
-        Product L = new Product(8, "jallo", 13.5, 95, 55, 5000);
+
+        //these are product objects.
+        Product L = new Product(8, "ford Pinto", 13.5, 95, 55, 5000);
         Inventory.addProduct(L);
-        Product K = new Product(2, "sheepl", 53.2, 9, 2, 1230);
+        Product K = new Product(2, "F-150", 53.2, 9, 2, 1230);
         Inventory.addProduct(K);
 
     }
@@ -172,6 +173,14 @@ public class MainFormController implements Initializable {
 
     @FXML
     void partsOnModifyButton(ActionEvent event) throws IOException {
+        Part selectedPart = (Part) partsTable.getSelectionModel().getSelectedItem();
+        //check is selected part is null. "please Select a part to modify".
+        ModifyPartFormController.dataPassing(selectedPart);
+
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(getClass().getResource("/maddux/firstscreen/ModifyPartFormController.fxml"));
+//        loader.load();
+
         Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/ModifyPartForm.fxml"));
         Stage stage = (Stage) partsAddB.getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);

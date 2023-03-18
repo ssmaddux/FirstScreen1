@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author Place Your Name Here
+ * @author Sage Maddux
  */
 public abstract class Part {
     private int id;
