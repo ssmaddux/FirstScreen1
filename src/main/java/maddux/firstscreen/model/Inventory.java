@@ -2,7 +2,6 @@ package maddux.firstscreen.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 
 import static java.lang.Character.isAlphabetic;
 
@@ -93,23 +92,35 @@ public class Inventory  {
         allParts.set(index, updatedPart);
     }
 
-    /** checks to see if the first character in a string is alphabetic. Returns false if left empyt or is numerical.
+    /**
+     * checks to see if the first character in a string is alphabetic. Returns false if left empyt or is numerical.
      *
      * @param check check = the string to be verified.
-     * @return only tru if alphabetic.
+     * @return
      */
     public static boolean startWLetter(String check) {
-        if (check == "" || check == null) {
-            return false;
+        if (check== null || check== ("")) {
+            return true;
         }
         if (isAlphabetic(check.charAt(0))) {
+            return true;
 
         }
-        else {
-            return false;
-        }
+
         return false;
     }
+//    public static boolean startWLetter(String check) {
+//        if (isAlphabetic(Integer.parseInt(check))) {
+//            return false;
+//        }
+//        else {
+//            return true;
+//        }
+//
+//
+//    }
+
+
 
     public static Part  selectedPart = null;
 }

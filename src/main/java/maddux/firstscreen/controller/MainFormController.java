@@ -127,7 +127,7 @@ public class MainFormController implements Initializable {
             } catch (NumberFormatException e) {
                 String partSearch = (searchBarPart.getText());
                 for (Part p : Inventory.getAllParts()) {
-                    if (p.getName().equals(partSearch)) {
+                    if (p.getName().toLowerCase().contains(partSearch.toLowerCase())) {
                         partsTable.getSelectionModel().select(p);
                     }
                 }
@@ -147,7 +147,7 @@ public class MainFormController implements Initializable {
             } catch (NumberFormatException e) {
                 String productSearch = (searchBarProduct.getText());
                 for (Product p : Inventory.getAllProducts()) {
-                    if (p.getName().equals(productSearch)) {
+                    if (p.getName().toLowerCase().contains(productSearch.toLowerCase())) {
                         productsTable.getSelectionModel().select(p);
                     }
                 }
@@ -174,6 +174,7 @@ public class MainFormController implements Initializable {
     @FXML
     void partsOnModifyButton(ActionEvent event) throws IOException {
         Part selectedPart = (Part) partsTable.getSelectionModel().getSelectedItem();
+        int index = partsTable.getSelectionModel().getSelectedIndex();
         //check is selected part is null. "please Select a part to modify".
         if (selectedPart == null)
         {
@@ -183,7 +184,8 @@ public class MainFormController implements Initializable {
             alert.setContentText("Select a product to modify");
             alert.show();
         }
-        ModifyPartFormController.dataPassing(selectedPart);
+        ModifyPartFormController mpf = new ModifyPartFormController();
+        mpf.dataPassing(index,selectedPart);
 
 //        FXMLLoader loader = new FXMLLoader();
 //        loader.setLocation(getClass().getResource("/maddux/firstscreen/ModifyPartFormController.fxml"));

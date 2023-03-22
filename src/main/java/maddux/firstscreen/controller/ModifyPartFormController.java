@@ -60,8 +60,9 @@ public class ModifyPartFormController implements Initializable  {
 
     }
 
-    public static void dataPassing(Part partToModify){
+    public  void dataPassing(int index,Part partToModify){
         modifiedPart = partToModify;
+        this.indexSave = index;
     }
 
     /** Checks the subclass of the Part to be modified and checks the appropriate radio button. Stores the selectedPart
@@ -100,7 +101,7 @@ public class ModifyPartFormController implements Initializable  {
      selected, an InHouse part is created with the appropriate arguments, and if it is not, an Outsourced part
      is created. The index of the Part that is being modified is used to save the modified Part to allParts.
      */
-    public void onSaveButton(ActionEvent actionEvent) {
+    public void onSaveButton(ActionEvent actionEvent) throws IOException {
         if (validateFields()) {
             index = Inventory.getIndex(Inventory.selectedPart);
             int id = Integer.parseInt(idField.getText());
@@ -117,9 +118,13 @@ public class ModifyPartFormController implements Initializable  {
             else {
                 String companyName = machineAndOutsorcedField.getText();
                 Outsourced modifiedPart = new Outsourced(id, name, price, inventory, min, max, companyName);
-                Inventory.updatePart(index, modifiedPart);
+                Inventory.updatePart(indexSave, modifiedPart);
             }
-            closeWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/MainForm.fxml"));
+            Scene scene = new Scene(root);
+            Stage MainScreenReturn = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            MainScreenReturn.setScene(scene);
+            MainScreenReturn.show();
         }
     }
 
