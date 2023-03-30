@@ -6,7 +6,11 @@ import javafx.collections.ObservableList;
 public class  Product  {
 
     //Confusion here.
-private  ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+
+    /**
+     *  passes part to observable list and uses passes that into an array.
+     */
+    private  ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 private int id;
 
 private String name;
@@ -113,16 +117,24 @@ private int max;
 
     //confusion adding these.
 
+    /**
+     *  adds the associated part.
+     * @param part
+     */
     public void addAssociatedPart(Part part) {
         associatedParts.add(part);
     }
 
 
-    public boolean deleteAssociatedPart(Part selectedAssociatedParts) {
-        return associatedParts.remove(selectedAssociatedParts);
+//    public boolean deleteAssociatedPart(Part selectedAssociatedParts) {
+//        return associatedParts.remove(selectedAssociatedParts);
+//
+//    }
 
-    }
-
+    /**
+     * passes PArt into an observable list and returns associated parts.
+     * @return
+     */
     public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;
 

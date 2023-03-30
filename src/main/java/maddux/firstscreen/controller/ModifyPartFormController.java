@@ -49,26 +49,38 @@ public class ModifyPartFormController implements Initializable  {
     private static Part modifiedPart = null;
     public Label machineCompanyNameLabel;
 
+    /**
+     * sets the last label to machine id when the in house radio button is actioned
+     * @param actionEvent
+     */
+
     public void onInHouse(ActionEvent actionEvent) {
         MachineId.setText("Machine Id");
 
 
     }
 
+    /**
+     * sets the last label to company name when the outsourced  radio button is actioned
+     * @param actionEvent
+     */
     public void onOutsourced(ActionEvent actionEvent) {
         MachineId.setText("Company Name");
 
     }
+
+    /**
+     * moves the selected part from main screen controller to the modify part controller
+     * @param index
+     * @param partToModify
+     */
 
     public  void dataPassing(int index,Part partToModify){
         modifiedPart = partToModify;
         this.indexSave = index;
     }
 
-    /** Checks the subclass of the Part to be modified and checks the appropriate radio button. Stores the selectedPart
-     from Inventory in the respective Part variable. The label for the last argument is set to the appropriate text
-     by calling setLabel(), then partIntake() is called to fill the TextFields with the Part's data.
-     */
+
 
 //    public void initialize(URL url, ResourceBundle resourceBundle) {
 //        if (Inventory.selectedPart.getClass() == InHouse.class) {
@@ -96,10 +108,10 @@ public class ModifyPartFormController implements Initializable  {
 
 
 
-    /** When the user clicks the saveButton the TextField data is saved in variables and then an appropriate
-     subclass is created with that data. The inHouseRadio button is checked to see if it is selected, if it is
-     selected, an InHouse part is created with the appropriate arguments, and if it is not, an Outsourced part
-     is created. The index of the Part that is being modified is used to save the modified Part to allParts.
+    /** When the saveButton is clicked the TextField data is saved in variables, after that the appropriate
+     subclass is created with that data. The inHouseRadio button is checked to see if it is selected. if it is
+     selected an InHouse part is created with the appropriate arguments. Else an Outsourced part
+     is created. The index of the Part that is being modified is used to save the modified Part to the allParts list.
      */
     public void onSaveButton(ActionEvent actionEvent) throws IOException {
         if (validateFields()) {
@@ -128,7 +140,7 @@ public class ModifyPartFormController implements Initializable  {
         }
     }
 
-    /** Calls closeWindow() when the user clicks the cancel button.
+    /** Calls closeWindow when the cancel button is actioned.
      */
     public void onCancelButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/MainForm.fxml"));
@@ -145,7 +157,7 @@ public class ModifyPartFormController implements Initializable  {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
-    /** Generates an Alert, and sets the text based on the field code entered.
+    /** Generates an Alert box/text and sets the text based on the field code entered.
      @param warningNumber int that correlates with the desired message.
      */
     public static void warnUserValidation(int warningNumber) {
@@ -183,11 +195,6 @@ public class ModifyPartFormController implements Initializable  {
     /** Checks for a NumberFormatException to determine if the String argument is a double.
      Returns true if a double can be parsed from the String argument. Returns false if the argument is null,
      or if a NumberFormatException occurs.
-     "RUNTIME ERROR"
-     Initially I ran into runtime errors in the Inventory GUI as I attempted to parse Strings for doubles.
-     When the Strings did not contain the correct type of data, I would run into a NumberFormatException.
-     I created methods to catch these exceptions and return false to indicate the String did not contain
-     a double.
      @param checkMe The String to be checked.
      @return true if checkMe is a double, false if not.
      */
@@ -203,16 +210,11 @@ public class ModifyPartFormController implements Initializable  {
         }
         return true;
     }
-    /** Checks for a NumberFormatException to determine if the String argument is an integer.
+    /** Determines if a NumberFormatException occurs to verify if the String argument is a string and not an integer.
      Returns true if an int can be parsed from the String argument.
      Returns false if the argument is null, or if a NumberFormatException occurs.
-     "RUNTIME ERROR"
-     Initially I ran into runtime errors in the Inventory GUI as I attempted to parse Strings for integers.
-     When the Strings did not contain the correct type of data, I would run into a NumberFormatException.
-     I created methods to catch these exceptions and return false to indicate the String did not contain
-     an integer.
      @param checkMe The String to be checked.
-     @return true if checkMe is an int, false if not.
+     @return true if checkMe is an int.
      */
     public static boolean checkNum(String checkMe) {
         if (checkMe == null) {
@@ -231,6 +233,18 @@ public class ModifyPartFormController implements Initializable  {
      @return true if all fields are validated, false if any are not.
      */
     public boolean validateFields() {
+
+        if (ModifyPartFormController.doubleCheck(priceField.getText())) {
+            price = Double.parseDouble(priceField.getText());
+        }
+        else {
+            ModifyPartFormController.warnUserValidation(1);
+            return false;
+        }
+
+
+
+
         if (Inventory.startWLetter(nameField.getText())) {
             partName = nameField.getText();
         }
@@ -238,13 +252,11 @@ public class ModifyPartFormController implements Initializable  {
             ModifyPartFormController.warnUserValidation(0);
             return false;
         }
-        if (ModifyPartFormController.doubleCheck(priceField.getText())) {
-             price = Double.parseDouble(priceField.getText());
-        }
-        else {
-            ModifyPartFormController.warnUserValidation(1);
-            return false;
-        }
+
+
+
+
+
         int stock;
         if (ModifyPartFormController.checkNum(inventoryField.getText())) {
             stock = Integer.parseInt(inventoryField.getText());
@@ -253,6 +265,9 @@ public class ModifyPartFormController implements Initializable  {
             ModifyPartFormController.warnUserValidation(2);
             return false;
         }
+
+
+
         int min;
         if (ModifyPartFormController.checkNum(minField.getText())) {
             min = Integer.parseInt(minField.getText());
@@ -261,6 +276,8 @@ public class ModifyPartFormController implements Initializable  {
             ModifyPartFormController.warnUserValidation(3);
             return false;
         }
+
+
         int max;
         if (ModifyPartFormController.checkNum(maxField.getText())) {
             max = Integer.parseInt(maxField.getText());
@@ -269,6 +286,8 @@ public class ModifyPartFormController implements Initializable  {
             ModifyPartFormController.warnUserValidation(4);
             return false;
         }
+
+
         if (min > max) {
             ModifyPartFormController.warnUserValidation(4);
             return false;
@@ -277,6 +296,8 @@ public class ModifyPartFormController implements Initializable  {
             ModifyPartFormController.warnUserValidation(2);
             return false;
         }
+
+
         if (inHouse.isSelected()) {
             if (ModifyPartFormController.checkNum(machineAndOutsorcedField.getText())) {
                  machineId = Integer.parseInt(machineAndOutsorcedField.getText());
@@ -286,6 +307,7 @@ public class ModifyPartFormController implements Initializable  {
                 return false;
             }
         }
+
         else if (outsourced.isSelected()) {
             if (Inventory.startWLetter(machineAndOutsorcedField.getText())) {
                  companyName = machineAndOutsorcedField.getText();
@@ -298,11 +320,11 @@ public class ModifyPartFormController implements Initializable  {
         return true;
     }
 
-    /** Changes the label by calling setLabel() when the user selects a radio button.
-     */
-    public void onRadioSelect(ActionEvent actionEvent) {
-        setLabel();
-    }
+//    /** Changes the label by calling setLabel() when the user selects a radio button.
+//     */
+//    public void onRadioSelect(ActionEvent actionEvent) {
+//        setLabel();
+//    }
 
     /** Changes the label text to reflect the selected radio button.
      */
@@ -315,7 +337,7 @@ public class ModifyPartFormController implements Initializable  {
         }
     }
 // in addpartcontroller on laptop add in the warnUserValidation method here maybe.
-    /** Sets the TextFields to the appropriate text from the Part stored in either InhousePart or OutsourcedPart.
+    /** Sets TextFields to the appropriate text from the Part stored in either InhousePart or OutsourcedPart.
      */
     public void partIntake() {
 
@@ -349,3 +371,5 @@ public class ModifyPartFormController implements Initializable  {
 
     }
 }
+
+////////////////////////

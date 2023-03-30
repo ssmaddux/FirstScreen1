@@ -5,57 +5,75 @@ import javafx.collections.ObservableList;
 
 import static java.lang.Character.isAlphabetic;
 
+/**
+ * inventory class. for holding all parts and products.
+ */
 public class Inventory  {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
+    /**
+     * adds product to all products
+     * @param part
+     */
     public static void addPart(Part part) {
         allParts.add(part);
     }
+
+    /**
+     * passes Part into an observable list and returns the list.
+     * @return
+     */
     public static ObservableList<Part> getAllParts(){
         return allParts;
     }
-//    public static Part lookupPart(int partId){
-//        for(Part p : allParts ) {
-//            if (p.getId() == partId)
-//                return p;
-//        }
-//
-//        return null;
-//
-//    }
-//    This will be for searching via Text rather than Id and its needed below as well.
-//    public static ObservableList<Part> lookupPart(String part){
-//        //String partName = part;
-//        ObservableList<Part> kk =FXCollections.observableArrayList();
-//        for(Part p : allParts) {
-//            if (part.compareTo(p.getName()) == 0)
-//                kk.add(p);
-//
-//        }
-//
-//
-//        return kk;
-//
-//    }
+
+
+    /**
+     * adds product to all products
+     * @param product
+     */
 
     public static void addProduct(Product product) {
         allProducts.add(product);
     }
+
+    /**
+     * passes Product into an observable list and returns the list.
+     * @return
+     */
     public static ObservableList<Product> getAllProducts(){
         return allProducts;
     }
-//    public static Product lookupProduct(int productId){
-//        for(Product p : allProducts ) {
-//            if (p.getId() == productId)
-//                return p;
-//        }
-//
+
+
+//    public static ObservableList<Part> lookupPart(Part part) {
 //        return null;
+//    }
 //
+//    public static ObservableList<Product> lookupProduct(Product product) {
+//        return null;
 //    }
 
+    /**
+     * initalizes product id to 0 for incrementation.
+     */
+    private static int productId = 0;
 
+    /**
+     * increments product Id for randomness.
+     * @return
+     */
+
+    public static int getNewProductId() {
+        return ++productId;
+    }
+
+    /**
+     *  deletes part from inventory that is selected by the user.
+     * @param selectedPart
+     * @return
+     */
     public static boolean deletePart (Part selectedPart) {
             if(allParts.contains(selectedPart)) {
                 allParts.remove(selectedPart);
@@ -65,6 +83,11 @@ public class Inventory  {
             }
         }
 
+    /**
+     *  delets product from inventory that is selected by the user.
+     * @param selectedProduct
+     * @return
+     */
     public static boolean deleteProduct (Product selectedProduct) {
         if(allProducts.contains(selectedProduct)) {
             allProducts.remove(selectedProduct);
@@ -75,7 +98,6 @@ public class Inventory  {
     }
 
     /** returns an integer index of the product.
-     *
      * @param part
      * @return the index of a part as int.
      */
@@ -84,13 +106,18 @@ public class Inventory  {
     }
 
     /** replaces a part in allPArts with .set() at a specific index.
-     *
      * @param index of the part to be replaced.
      * @param updatedPart the part to be saved over the old part.
      */
-    public static void updatePart(int index, Part updatedPart) {
+    public static void updatePart(int index, Part updatedPart)
+    {
         allParts.set(index, updatedPart);
     }
+
+//    public static void updateProduct(int index, Product updatedProduct)
+//    {
+//        allProducts.set(index, updatedProduct);
+//    }
 
     /**
      * checks to see if the first character in a string is alphabetic. Returns false if left empyt or is numerical.
@@ -121,6 +148,8 @@ public class Inventory  {
 //    }
 
 
-
+    /**
+     * sets the variable selected part to null.
+     */
     public static Part  selectedPart = null;
 }

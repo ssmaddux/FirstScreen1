@@ -32,13 +32,19 @@ public class AddPartFormController  {
     public Button cancelButton;
 
 
-
-
+    /**
+     * sets the correct label when the radio button is toggled.
+     * @param actionEvent
+     */
 
     public void onInHouse(ActionEvent actionEvent) {
         MachineId.setText("Machine Id");
 
     }
+    /**
+     * sets the correct label when the radio button is toggled.
+     * @param actionEvent
+     */
 
     public void onOutsourced(ActionEvent actionEvent) {
         MachineId.setText("Company Name");
@@ -49,7 +55,7 @@ public class AddPartFormController  {
 
 
     /**
-     * On button press, go to the main screen.
+     * when cancel button is actioned the main screen is loaded.
      * @param event
      */
 
@@ -63,7 +69,7 @@ public class AddPartFormController  {
 
     }
     /**
-     * On button press, save the part.
+     * Saves the part on the save button press
      *
      * @param event
      */
@@ -84,22 +90,20 @@ public class AddPartFormController  {
             int machineID = 0;
             String companyName;
 
-            //Min should be less than max.
+
             if (max < min) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Maximum must be greater than minimum.");
-                alert.showAndWait();
-                return;
-            }
-            //Inventory should be between the min and max values.
-            else if (inStock < min || max < inStock) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory must be within min and max.");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Max must be greater than min.");
                 alert.showAndWait();
                 return;
             }
 
-            // Print to console for troubleshooting.
-            System.out.println(outsourced.isSelected() + " outsourced");
-            System.out.println(inHouse.isSelected() + " inhouse");
+            else if (inStock < min || max < inStock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory must be between min and max.");
+                alert.showAndWait();
+                return;
+            }
+
+
             if (outsourced.isSelected()) {
                 companyName = machineIdField.getText();
                 Outsourced addPart = new Outsourced(uniqueID, name, price, inStock, min, max, companyName);
