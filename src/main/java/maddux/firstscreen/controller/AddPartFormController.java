@@ -57,6 +57,8 @@ public class AddPartFormController  {
     /**
      * when cancel button is actioned the main screen is loaded.
      * @param event
+     * Issue loading the main screen. Changing all (.) to (/) inbetween the file names was the solution to this problem and copying and pasting the correct address for the main form
+     *  from my project files fixed it.
      */
 
     @FXML
@@ -70,6 +72,7 @@ public class AddPartFormController  {
     }
     /**
      * Saves the part on the save button press
+     * Problem with incorrect indentation with the white space in the try catch block created problems running the onSaveButton method.
      *
      * @param event
      */
@@ -102,6 +105,7 @@ public class AddPartFormController  {
                 alert.showAndWait();
                 return;
             }
+            else
 
 
             if (outsourced.isSelected()) {

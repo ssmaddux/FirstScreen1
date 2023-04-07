@@ -26,18 +26,18 @@
         <TextField fx:id="searchField" layoutX="562.0" layoutY="29.0" onKeyPressed="#onSearchKeyPr" promptText="Search Part Id or Name" />
         <TableView fx:id="associatedPartTableView" layoutX="388.0" layoutY="263.0" prefHeight="135.0" prefWidth="347.0">
             <columns>
-                <TableColumn fx:id="associatedPartIdColumn" prefWidth="75.0" text="C1" />
-                <TableColumn fx:id="associatedPartNameColumn" prefWidth="75.0" text="C2" />
-                <TableColumn fx:id="associatedPartInventoryColumn" prefWidth="75.0" text="C1" />
-                <TableColumn fx:id="associatedPartPriceColumn" prefWidth="75.0" text="C1" />
+                <TableColumn fx:id="associatedPartIdColumn" prefWidth="75.0" text="Part ID" />
+                <TableColumn fx:id="associatedPartNameColumn" prefWidth="75.0" text="Part Name" />
+                <TableColumn fx:id="associatedPartInventoryColumn" prefWidth="75.0" text="Inventory/Level" />
+                <TableColumn fx:id="associatedPartPriceColumn" prefWidth="75.0" text="Price" />
             </columns>
         </TableView>
         <TableView fx:id="partTableView" layoutX="385.0" layoutY="81.0" prefHeight="135.0" prefWidth="347.0">
             <columns>
-                <TableColumn fx:id="partIdColumn" prefWidth="75.0" text="C1" />
-                <TableColumn fx:id="partNameColumn" prefWidth="75.0" text="C2" />
-                <TableColumn fx:id="partInventoryColumn" prefWidth="75.0" text="C1" />
-                <TableColumn fx:id="partPriceColumn" prefWidth="75.0" text="C1" />
+                <TableColumn fx:id="partIdColumn" prefWidth="75.0" text="Part ID" />
+                <TableColumn fx:id="partNameColumn" prefWidth="75.0" text="Part Name" />
+                <TableColumn fx:id="partInventoryColumn" prefWidth="75.0" text="Inventory/Level" />
+                <TableColumn fx:id="partPriceColumn" prefWidth="75.0" text="Price" />
             </columns>
         </TableView>
         <Button fx:id="addButton" layoutX="692.0" layoutY="225.0" mnemonicParsing="false" onAction="#onAddButton" text="Add" />

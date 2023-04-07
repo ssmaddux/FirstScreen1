@@ -55,7 +55,7 @@ public class ModifyPartFormController implements Initializable  {
      */
 
     public void onInHouse(ActionEvent actionEvent) {
-        MachineId.setText("Machine Id");
+        machineCompanyNameLabel.setText("Machine Id");
 
 
     }
@@ -65,12 +65,13 @@ public class ModifyPartFormController implements Initializable  {
      * @param actionEvent
      */
     public void onOutsourced(ActionEvent actionEvent) {
-        MachineId.setText("Company Name");
+        machineCompanyNameLabel.setText("Company Name");
 
     }
 
     /**
      * moves the selected part from main screen controller to the modify part controller
+     *
      * @param index
      * @param partToModify
      */
@@ -82,46 +83,22 @@ public class ModifyPartFormController implements Initializable  {
 
 
 
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        if (Inventory.selectedPart.getClass() == InHouse.class) {
-//            inHouse.setSelected(true);
-//            inHousePart = (InHouse) Inventory.selectedPart;
-//        }
-//        else {
-//            outsourced.setSelected(true);
-//            outsourcedPart = (Outsourced) Inventory.selectedPart;
-//        }
-//        setLabel();
-//        partIntake();
-
-//    }
-
-//    public void sendPart(Part inHouse) {
-//        idField.setText(String.valueOf(inHouse.getId));
-//    }
 
 
-
-
-
-
-
-
-
-    /** When the saveButton is clicked the TextField data is saved in variables, after that the appropriate
-     subclass is created with that data. The inHouseRadio button is checked to see if it is selected. if it is
-     selected an InHouse part is created with the appropriate arguments. Else an Outsourced part
-     is created. The index of the Part that is being modified is used to save the modified Part to the allParts list.
+    /** text feild data gets saved into vars on click. Radio button is checked, then the appropriate object is created (inhouse or outosurced)
+     *  The part that is being modified is saved to the all parts list by index.
      */
     public void onSaveButton(ActionEvent actionEvent) throws IOException {
         if (validateFields()) {
-            index = Inventory.getIndex(Inventory.selectedPart);
+
             int id = Integer.parseInt(idField.getText());
             String name = nameField.getText();
             double price = Double.parseDouble(priceField.getText());
             int inventory = Integer.parseInt(inventoryField.getText());
             int min = Integer.parseInt(minField.getText());
             int max = Integer.parseInt(maxField.getText());
+            index = Inventory.getIndex(Inventory.selectedPart);
+
             if (inHouse.isSelected()) {
                 int machineId = Integer.parseInt(machineAndOutsorcedField.getText());
                 InHouse modifiedPart = new InHouse(id, name, price, inventory, min, max, machineId);
@@ -150,7 +127,7 @@ public class ModifyPartFormController implements Initializable  {
         MainScreenReturn.show();
     }
 
-    /** Uses Stage.close() to close the ModifyPart window and sets Inventory.selectedPart to null.
+    /** Closews modified part window. sets selected part to null.
      */
     private void closeWindow() {
         Inventory.selectedPart = null;
@@ -223,7 +200,7 @@ public class ModifyPartFormController implements Initializable  {
         try {
             Integer.parseInt(checkMe);
         }
-        catch (NumberFormatException nfe) {
+        catch (NumberFormatException e) {
             return false;
         }
         return true;
@@ -320,11 +297,7 @@ public class ModifyPartFormController implements Initializable  {
         return true;
     }
 
-//    /** Changes the label by calling setLabel() when the user selects a radio button.
-//     */
-//    public void onRadioSelect(ActionEvent actionEvent) {
-//        setLabel();
-//    }
+
 
     /** Changes the label text to reflect the selected radio button.
      */
@@ -336,7 +309,7 @@ public class ModifyPartFormController implements Initializable  {
             machineAndOutsorcedField.setText("Company Name");
         }
     }
-// in addpartcontroller on laptop add in the warnUserValidation method here maybe.
+// in addpartcontroller on laptop add in the warnUserValidation method here.
     /** Sets TextFields to the appropriate text from the Part stored in either InhousePart or OutsourcedPart.
      */
     public void partIntake() {
@@ -372,4 +345,3 @@ public class ModifyPartFormController implements Initializable  {
     }
 }
 
-////////////////////////

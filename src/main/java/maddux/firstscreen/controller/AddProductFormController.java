@@ -165,6 +165,7 @@ public class AddProductFormController implements Initializable {
     /**
      * Adds part object selected in the all parts table to the associated parts table.
      * Displays error message if no part is selected.
+     *
      * @param event Add button action.
      */
 

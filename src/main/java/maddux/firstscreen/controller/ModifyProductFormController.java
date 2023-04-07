@@ -69,15 +69,7 @@ public class ModifyProductFormController implements Initializable {
         this.indexSave = index;
     }
 
-//    public void onCancelButton(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/MainForm.fxml"));
-//        Scene scene = new Scene(root);
-//        Stage MainScreenReturn = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        MainScreenReturn.setScene(scene);
-//        MainScreenReturn.show();
-//
-//
-//    }
+
 
     /**
      * A search based on value in parts search text field and refreshes the parts table view with search results.

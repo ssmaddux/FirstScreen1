@@ -24,9 +24,7 @@ public abstract class Part {
         this.max = max;
     }
 
-    public static ObservableList<Part> getAllParts() {
-        return getAllParts();
-    }
+
 
     /**
      * @return the id

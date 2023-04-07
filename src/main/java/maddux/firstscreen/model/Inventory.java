@@ -46,14 +46,23 @@ public class Inventory  {
         return allProducts;
     }
 
+    /**
+     * passses part into am observable list
+     * @param part
+     * @return
+     */
+    public static ObservableList<Part> lookupPart(Part part) {
+        return null;
+    }
 
-//    public static ObservableList<Part> lookupPart(Part part) {
-//        return null;
-//    }
-//
-//    public static ObservableList<Product> lookupProduct(Product product) {
-//        return null;
-//    }
+    /**
+     *  passes product into an observable list
+     * @param product
+     * @return
+     */
+    public static ObservableList<Product> lookupProduct(Product product) {
+        return null;
+    }
 
     /**
      * initalizes product id to 0 for incrementation.
@@ -114,10 +123,10 @@ public class Inventory  {
         allParts.set(index, updatedPart);
     }
 
-//    public static void updateProduct(int index, Product updatedProduct)
-//    {
-//        allProducts.set(index, updatedProduct);
-//    }
+    public static void updateProduct(int index, Product updatedProduct)
+    {
+        allProducts.set(index, updatedProduct);
+    }
 
     /**
      * checks to see if the first character in a string is alphabetic. Returns false if left empyt or is numerical.
@@ -136,20 +145,63 @@ public class Inventory  {
 
         return false;
     }
-//    public static boolean startWLetter(String check) {
-//        if (isAlphabetic(Integer.parseInt(check))) {
-//            return false;
-//        }
-//        else {
-//            return true;
-//        }
-//
-//
-//    }
+
 
 
     /**
      * sets the variable selected part to null.
      */
     public static Part  selectedPart = null;
+
+    /**
+     *  the lookup part method gathers all parts from the inventory and checks for part name contained in the search box.
+     * @param partName
+     * @return
+     */
+    public static ObservableList<Part> lookupPart(String partName){
+        ObservableList<Part> alist = FXCollections.observableArrayList();
+        for (Part p : Inventory.getAllParts()) {
+            if (p.getName().contains(partName)) {
+                alist.add(p);
+            }
+        }
+
+        return alist;
+    }
+
+    /**
+     *  the lookup part method gathers all products from the inventory and checks for product name contained in the search box.
+     * @param productName
+     * @return
+     */
+    public static ObservableList<Product> lookupProduct(String productName){
+        ObservableList<Product> aList = FXCollections.observableArrayList();
+        for(Product p: Inventory.getAllProducts()) {
+            if (p.getName().contains(productName)) {
+                aList.add(p);
+            }
+        }
+
+        return aList;
+    }
+
+    public static Part lookupPart (int partId){
+        for (Part p : Inventory.getAllParts()) {
+            if (p.getId() == partId) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public static Product lookupProduct (int productId){
+        for (Product p: Inventory.getAllProducts()) {
+            if (p.getId() == productId) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+
 }

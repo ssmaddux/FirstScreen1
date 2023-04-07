@@ -1,5 +1,6 @@
 package maddux.firstscreen.controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +18,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-//import static maddux.firstscreen.model.Inventory.lookupPart;
-//import static maddux.firstscreen.model.Inventory.lookupProduct;
+
 
 public class MainFormController implements Initializable {
     public static Product productToModify;
@@ -58,12 +58,10 @@ public class MainFormController implements Initializable {
 
 
 
-
-
     private static boolean firstTime = true;
 
     /**
-     * adds the test for program testing.
+     * adds the test data for program testing.
      */
 
     private void addTestData() {
@@ -135,31 +133,36 @@ public class MainFormController implements Initializable {
 
     }
 
-//    partsTable.setItems(parts);
+
 
     /**
      *  search event for parts based on input in the search text field based on Id and Name
+     *  problem adding the inventory class, tried many fixes until I realized it was a simple speeling mistake.
      * @param event
      */
 
     public void onSearchButtonParts(ActionEvent event) {
-        if (!searchBarPart.getText().trim().isEmpty()) {
+     //  if (!searchBarPart.getText().trim().isEmpty()) {
             try {
                 int partSearch = Integer.parseInt(searchBarPart.getText());
                 for (Part p : Inventory.getAllParts()) {
                     if (p.getId() == partSearch) {
                         partsTable.getSelectionModel().select(p);
+                        return;
                     }
                 }
             } catch (NumberFormatException e) {
-                String partSearch = (searchBarPart.getText());
-                for (Part p : Inventory.getAllParts()) {
-                    if (p.getName().toLowerCase().contains(partSearch.toLowerCase())) {
-                        partsTable.getSelectionModel().select(p);
-                    }
-                }
+                //ignroing the catch to do search by name.
+
             }
-        }
+            String partSearch = (searchBarPart.getText());
+            ObservableList<Part> aList = Inventory.lookupPart(partSearch);
+            if (aList.isEmpty()){
+                System.out.println("popup part not found");
+            } else {
+                partsTable.setItems(aList);
+            }
+     //   }
     }
 
     /**
@@ -169,7 +172,7 @@ public class MainFormController implements Initializable {
 
 
     public void onSearchButtonProducts(ActionEvent event) {
-        if (!searchBarProduct.getText().trim().isEmpty()) {
+      //  if (!searchBarProduct.getText().trim().isEmpty()) {
             try {
                 int productSearch = Integer.parseInt(searchBarProduct.getText());
                 for (Product p : Inventory.getAllProducts()) {
@@ -178,14 +181,16 @@ public class MainFormController implements Initializable {
                     }
                 }
             } catch (NumberFormatException e) {
+
                 String productSearch = (searchBarProduct.getText());
-                for (Product p : Inventory.getAllProducts()) {
-                    if (p.getName().toLowerCase().contains(productSearch.toLowerCase())) {
-                        productsTable.getSelectionModel().select(p);
-                    }
+                ObservableList<Product> aList = Inventory.lookupProduct(productSearch);
+                if (aList.isEmpty()){
+                    System.out.println("popup Product not found");
+                } else {
+                    productsTable.setItems(aList);
                 }
             }
-        }
+      //  }
     }
 
 
@@ -194,11 +199,11 @@ public class MainFormController implements Initializable {
 
 
 
-    //Null Pointer exception here. Took more than 5 hours to fix. Fixed by changing periods (.) to slashes (/) and determining the appropriate file structure.
-// windowing/ changing to appropriate screens using windowing by using onaction buttons in the mainform on the parts and products panes.
+
 
     /**
      * Loads add part form on add button click.
+     * Thew a null pointer exception until the correct file address was plcaed with correct notation.
      * @param actionEvent
      * @throws IOException
      */
@@ -221,7 +226,6 @@ public class MainFormController implements Initializable {
     void partsOnModifyButton(ActionEvent event) throws IOException {
         Part selectedPart = (Part) partsTable.getSelectionModel().getSelectedItem();
         int index = partsTable.getSelectionModel().getSelectedIndex();
-        //check is selected part is null. "please Select a part to modify".
         if (selectedPart == null)
         {
 
@@ -233,9 +237,7 @@ public class MainFormController implements Initializable {
         ModifyPartFormController mpf = new ModifyPartFormController();
         mpf.dataPassing(index,selectedPart);
 
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("/maddux/firstscreen/ModifyPartFormController.fxml"));
-//        loader.load();
+
 
         Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/ModifyPartForm.fxml"));
         Stage stage = (Stage) partsAddB.getScene().getWindow();
@@ -244,41 +246,7 @@ public class MainFormController implements Initializable {
 
         }
 
-//    /**
-//     * Loads the ModifyProductController.
-//     *
-//     * The method displays an error message if no product is selected.
-//     *
-//     * @param event Product modify button action.
-//     * @throws IOException From FXMLLoader.
-//     *
-//     */
 
-//    @FXML
-//    void productsOnModifyButton(ActionEvent event) throws IOException {
-//        Product selectedProduct = (Product) productsTable.getSelectionModel().getSelectedItem();
-//        int index = productsTable.getSelectionModel().getSelectedIndex();
-//        //check is selected part is null. "please Select a part to modify".
-//        if (selectedProduct == null)
-//        {
-//
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error");
-//            alert.setContentText("Select a product to modify");
-//            alert.show();
-//        }
-//        ModifyProductFormController mpf = new ModifyProductFormController();
-//        mpf.dataPassing(index,selectedProduct);
-//
-////        FXMLLoader loader = new FXMLLoader();
-////        loader.setLocation(getClass().getResource("/maddux/firstscreen/ModifyPartFormController.fxml"));
-////        loader.load();
-//
-//        Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/ModifyProductForm.fxml"));
-//        Stage stage = (Stage) partsAddB.getScene().getWindow();
-//        Scene scene = new Scene(root, 600, 400);
-//        stage.setScene(scene);
-//
 //    }
 
 
@@ -342,12 +310,7 @@ public class MainFormController implements Initializable {
         stage.setScene(scene);
     }
 
-//    public void productsOnModifyButton(ActionEvent actionEvent) throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("/maddux/firstscreen/ModifyProductForm.fxml"));
-//        Stage stage = (Stage) productsModifyButton.getScene().getWindow();
-//        Scene scene = new Scene(root, 800, 600);
-//        stage.setScene(scene);
-//    }
+
 
     /**
      *  delets selected product on the delete button click, produces confirmation message, deletes selected product from inventory.
@@ -388,60 +351,21 @@ public class MainFormController implements Initializable {
     }
 
     /**
-     *  method for search bar part, does nothing
+     *  method for search bar part.
      * @param actionEvent
      */
     public void onSearchBarPart(ActionEvent actionEvent) {
     }
 
     /**
-     * method for search bar product, does nothing.
+     * method for search bar product.
      * @param actionEvent
      */
     public void onSearchBarProduct(ActionEvent actionEvent) {
     }
 
 
-//    /**
-//     * Displays alert messages.
-//     *
-//     * @param alertType Alert message selector.
-//     */
 
-//    private void alertDisplay(int alertType) {
-//
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        Alert alertError = new Alert(Alert.AlertType.ERROR);
-//
-//        switch (alertType) {
-//            case 1:
-//                alert.setTitle("Information");
-//                alert.setHeaderText("Part not found");
-//                alert.showAndWait();
-//                break;
-//            case 2:
-//                alert.setTitle("Information");
-//                alert.setHeaderText("Product not found");
-//                alert.showAndWait();
-//                break;
-//            case 3:
-//                alertError.setTitle("Error");
-//                alertError.setHeaderText("Part not selected");
-//                alertError.showAndWait();
-//                break;
-//            case 4:
-//                alertError.setTitle("Error");
-//                alertError.setHeaderText("Product not selected");
-//                alertError.showAndWait();
-//                break;
-//            case 5:
-//                alertError.setTitle("Error");
-//                alertError.setHeaderText("Parts Associated");
-//                alertError.setContentText("All parts must be removed from product before deletion.");
-//                alertError.showAndWait();
-//                break;
-//        }
-//    }
 
 
 
