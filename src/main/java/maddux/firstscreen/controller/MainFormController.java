@@ -136,6 +136,9 @@ public class MainFormController implements Initializable {
 
 
     /**
+     * RUNTIME ERROR occured in this method when I tried to get the text from the search bar part. the erros occured because wrote the method to search for an
+     * Integer without using the .parseInt method. The way I fixed it was researching which method can search for an integer in a tex box which is .parseInt.
+     * This corrected my runtime error.
      *  search event for parts based on input in the search text field based on Id and Name
      *  problem adding the inventory class, tried many fixes until I realized it was a simple speeling mistake.
      * @param event
@@ -152,13 +155,23 @@ public class MainFormController implements Initializable {
                     }
                 }
             } catch (NumberFormatException e) {
-                //ignroing the catch to do search by name.
+                if (searchBarPart.getText().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Input Error");
+                    alert.setContentText("The search box is empty");
+                    alert.showAndWait();
+                    //ignroing the catch to do search by name.
+                }
 
             }
             String partSearch = (searchBarPart.getText());
             ObservableList<Part> aList = Inventory.lookupPart(partSearch);
             if (aList.isEmpty()){
-                System.out.println("popup part not found");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Input Error");
+                alert.setContentText("Part not found");
+                alert.showAndWait();
+                System.out.println(" part not found");
             } else {
                 partsTable.setItems(aList);
             }
@@ -172,7 +185,6 @@ public class MainFormController implements Initializable {
 
 
     public void onSearchButtonProducts(ActionEvent event) {
-      //  if (!searchBarProduct.getText().trim().isEmpty()) {
             try {
                 int productSearch = Integer.parseInt(searchBarProduct.getText());
                 for (Product p : Inventory.getAllProducts()) {
@@ -181,16 +193,26 @@ public class MainFormController implements Initializable {
                     }
                 }
             } catch (NumberFormatException e) {
+                if (searchBarProduct.getText().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Input Error");
+                    alert.setContentText("The search box is empty");
+                    alert.showAndWait();
+                    //ignroing the catch to do search by name.
+                }
 
                 String productSearch = (searchBarProduct.getText());
                 ObservableList<Product> aList = Inventory.lookupProduct(productSearch);
                 if (aList.isEmpty()){
-                    System.out.println("popup Product not found");
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Input Error");
+                    alert.setContentText("Product not found");
+                    alert.showAndWait();
+                    System.out.println(" Product not found");
                 } else {
                     productsTable.setItems(aList);
                 }
             }
-      //  }
     }
 
 

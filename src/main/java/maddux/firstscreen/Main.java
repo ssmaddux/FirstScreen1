@@ -11,6 +11,8 @@ import java.io.IOException;
  * the main method
  * loads main form
  */
+
+
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -21,7 +23,11 @@ public class Main extends Application {
         stage.show();
     }
 
-
+    /**
+     *  FUTURE ENHANCEMENT  add a method tp the program which will automatically delete duplicate parts and or products and will prompt the user
+     *  to do so.
+     * @param args
+     */
 
 
     public static void main(String[] args) {
