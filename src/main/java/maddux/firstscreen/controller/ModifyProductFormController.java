@@ -96,8 +96,12 @@ public class ModifyProductFormController implements Initializable {
 
         partTableView.setItems(partsFound);
 
+        if (searchField.getText().isEmpty()) {
+            alertDisplay(7);
+        }
 
-        if (partsFound.size() == 0) {
+
+        if (partsFound.isEmpty()) {
             alertDisplay(1);
         }
     }
@@ -149,6 +153,12 @@ public class ModifyProductFormController implements Initializable {
                 alert.setTitle("Error");
                 alert.setHeaderText("Name is Empty");
                 alert.setContentText("Name cannot contain numbers or be empty.");
+                alert.showAndWait();
+                break;
+            case 7:
+                alert.setTitle("Error");
+                alert.setHeaderText("Search field empty");
+                alert.setContentText("The search field needs input to search.");
                 alert.showAndWait();
                 break;
         }

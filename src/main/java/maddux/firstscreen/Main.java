@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
+ * FUTURE ENHANCEMENT  add a method tp the program which will automatically delete duplicate parts and or products and will prompt the user
+ *  to do so.
+ *  JAVADOCS FOLDER LOCATION; in this project inside the src folder.
  * the main method
  * loads main form
  */

@@ -4,8 +4,8 @@ package maddux.firstscreen.model;
 import javafx.collections.ObservableList;
 
 /**
- * Part Class
- * @author Sage Maddux
+ *
+ * @author Place Your Name Here
  */
 public abstract class Part {
     private int id;

@@ -200,7 +200,7 @@ public class MainFormController implements Initializable {
                     alert.showAndWait();
                     //ignroing the catch to do search by name.
                 }
-
+            }
                 String productSearch = (searchBarProduct.getText());
                 ObservableList<Product> aList = Inventory.lookupProduct(productSearch);
                 if (aList.isEmpty()){
@@ -213,7 +213,7 @@ public class MainFormController implements Initializable {
                     productsTable.setItems(aList);
                 }
             }
-    }
+
 
 
 
@@ -305,16 +305,27 @@ public class MainFormController implements Initializable {
 
 
     public void partsOnDeleteButton(ActionEvent actionEvent) {
-        System.out.println("On delete clicked");
-        Part selectedPart = partsTable.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Are you sure?");
-        alert.setContentText("Do you want to delete this part?");
-        Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Inventory.deletePart(selectedPart);
+        Part selectedPart1 = partsTable.getSelectionModel().getSelectedItem();
+        if (selectedPart1 == null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("No part Selected?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+        } else {
+
+            System.out.println("On delete clicked");
+            Part selectedPart = partsTable.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Are you sure?");
+            alert.setContentText("Do you want to delete this part?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Inventory.deletePart(selectedPart);
+            }
         }
     }
 
@@ -340,23 +351,33 @@ public class MainFormController implements Initializable {
      */
 
     public void productsOnDeleteButton(ActionEvent actionEvent) {
-        Product selectedProduct = productsTable.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Are you sure?");
-        alert.setContentText("Do you want to delete this part?");
-        Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Product selectedDeleteProduct = productsTable.getSelectionModel().getSelectedItem();
-            if (selectedDeleteProduct.getAllAssociatedParts().size() > 0) {
-                Alert cantDelete = new Alert(Alert.AlertType.ERROR);
-                cantDelete.setTitle("Error Message");
-                cantDelete.setContentText("Remove associated parts before you delete the product.");
-                cantDelete.showAndWait();
-                return;
+        Product selectedPart2 = productsTable.getSelectionModel().getSelectedItem();
+        if (selectedPart2 == null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("No product Selected?");
+            Optional<ButtonType> result = alert.showAndWait();
+        } else {
+
+            Product selectedProduct = productsTable.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Are you sure?");
+            alert.setContentText("Do you want to delete this part?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Product selectedDeleteProduct = productsTable.getSelectionModel().getSelectedItem();
+                if (selectedDeleteProduct.getAllAssociatedParts().size() > 0) {
+                    Alert cantDelete = new Alert(Alert.AlertType.ERROR);
+                    cantDelete.setTitle("Error Message");
+                    cantDelete.setContentText("Remove associated parts before you delete the product.");
+                    cantDelete.showAndWait();
+                    return;
+                }
+                Inventory.deleteProduct(selectedProduct);
             }
-            Inventory.deleteProduct(selectedProduct);
         }
 
     }

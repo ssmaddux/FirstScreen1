@@ -79,7 +79,7 @@ public class AddPartFormController  {
     @FXML
     void onSaveButton(ActionEvent event) throws IOException {
         try {
-
+            //rewrite this.
             // Create random number and multiply by 100, this will keep it from overlapping with products.
             int uniqueID = (int) (Math.random() * 100);
 

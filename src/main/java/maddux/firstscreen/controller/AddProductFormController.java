@@ -240,8 +240,12 @@ public class AddProductFormController implements Initializable {
 
         partTableView.setItems(partsFound);
 
+        if (partSearchTextField.getText().isEmpty()) {
+            displayAlert(8);
+        }
+
         if (partsFound.size() == 0) {
-            displayAlert(1);
+            displayAlert(2);
         }
     }
 
@@ -418,6 +422,14 @@ public class AddProductFormController implements Initializable {
                 alert.setContentText("Name cannot be empty.");
                 alert.showAndWait();
                 break;
+
+            case 8:
+                alert.setTitle("Error");
+                alert.setHeaderText("Search field empty");
+                alert.setContentText("The search field needs input to search.");
+                alert.showAndWait();
+                break;
+
         }
     }
 
